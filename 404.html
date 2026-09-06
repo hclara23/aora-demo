@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>AORA</title>
+<script>
+// A deep link into the single-page member app, reloaded. Back to its entry.
+var p = location.pathname;
+location.replace(p.indexOf('/aora-demo/member') === 0 ? '/aora-demo/member/'
+  : p.indexOf('/aora-demo/console') === 0 ? '/aora-demo/console.html' : '/aora-demo/');
+</script>
+</head><body></body></html>

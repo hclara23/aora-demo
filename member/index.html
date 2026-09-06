@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <style>body{margin:0}</style>
+<script>
+// Hosting shim, not app code. Expo Router's first replaceState drops the base
+// path (/aora-demo/member), which turns a reload into a 404 on GitHub Pages.
+// Every history write is kept under the base; nothing else is touched.
+(function () {
+  var BASE = '/aora-demo/member';
+  function keep(url) {
+    if (url == null) return url;
+    var u = new URL(String(url), location.href);
+    if (u.origin !== location.origin) return url;
+    if (u.pathname.indexOf(BASE) !== 0) u.pathname = BASE + (u.pathname === '/' ? '/' : u.pathname);
+    return u.pathname + u.search + u.hash;
+  }
+  ['pushState', 'replaceState'].forEach(function (m) {
+    var orig = history[m];
+    history[m] = function (state, title, url) { return orig.call(history, state, title, keep(url)); };
+  });
+})();
+</script>
 </head>
 <body>
 <title>AORA</title>
