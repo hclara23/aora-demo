@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>AORA Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+  /* AORA's own tokens, transcribed from packages/ui — not a new palette.
+     The walkthrough should look like the thing it is walking through. */
+  :root {
+    color-scheme: light;
+    --teal: #0F4C5C;
+    --teal-dim: #17677C;
+    --ink: #13232B;
+    --gold: #B98B3A;
+    --sand: #F4EFE6;
+    --mist: #F1ECE3;    /* stone: sunken surfaces */
+    --gray: #5B6770;
+    --bg: #FAF7F2;      /* linen: the ground the app now uses */
+    --white: #FFFFFF;
+    --line: #DCD5C9;    /* warm hairline */
+    --green: #1B5E45;
+    --green-tint: #E7F4EE;
+    --amber: #8A5A00;
+    --amber-tint: #FBF1DF;
+    --red: #9B2C2C;
+    --red-tint: #FBEAEA;
+
+    --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 18px 96px; }
+
+  /* ---- Sticky wayfinder. She is on a phone and must never wonder where
+          she is or how much is left. ---------------------------------- */
+  nav.jump {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(250,247,242,0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -18px 28px;
+    padding: 10px 18px;
+    display: flex; gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.jump::-webkit-scrollbar { display: none; }
+  nav.jump a {
+    flex: 0 0 auto;
+    font-size: 13px; font-weight: 600; letter-spacing: .01em;
+    text-decoration: none; color: var(--teal);
+    background: var(--white); border: 1px solid var(--line);
+    border-radius: 999px; padding: 7px 13px;
+    white-space: nowrap;
+  }
+  nav.jump a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  header.hero {
+    padding: 40px 0 10px;
+  }
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--teal);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(34px, 9vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .lede { font-size: 19px; color: var(--gray); margin: 0 0 8px; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(25px, 6.5vw, 33px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 56px 0 6px;
+    text-wrap: balance;
+    scroll-margin-top: 72px;
+  }
+  h2 .num {
+    display: block;
+    font-family: var(--body);
+    font-size: 12px; font-weight: 700; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 8px;
+  }
+  h3 {
+    font-family: var(--body);
+    font-size: 17px; font-weight: 700;
+    margin: 30px 0 6px;
+  }
+  p { margin: 0 0 14px; }
+  .sub { color: var(--gray); margin: 0 0 22px; }
+
+  a.link { color: var(--teal); font-weight: 600; }
+
+  /* ---- The two links, made unmissable ------------------------------- */
+  .open {
+    display: block;
+    background: var(--teal); color: var(--white);
+    text-decoration: none;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 0 0 12px;
+  }
+  /* Block, or the three lines run together on one row: <span> is inline and
+     the card reads "LINK 1 The member app What your clients hold". */
+  .open .k, .open .t, .open .d { display: block; }
+  .open .k { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .72; }
+  .open .t { font-family: var(--display); font-size: 24px; font-weight: 600; line-height: 1.2; margin-top: 3px; }
+  .open .d { font-size: 15px; opacity: .82; margin-top: 5px; }
+  .open:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  /* ---- A step. Numbered, with a rail, so a thumb can track position -- */
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  ol.steps > li {
+    counter-increment: s;
+    position: relative;
+    padding: 0 0 4px 46px;
+    margin: 0 0 26px;
+  }
+  ol.steps > li::before {
+    content: counter(s);
+    position: absolute; left: 0; top: 0;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--teal); color: var(--white);
+    font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.steps > li::after {
+    content: '';
+    position: absolute; left: 14.5px; top: 34px; bottom: -26px;
+    width: 1px; background: var(--line);
+  }
+  ol.steps > li:last-child::after { display: none; }
+  .do { font-weight: 700; margin: 3px 0 4px; }
+  .see { margin: 0; color: var(--gray); }
+  .see b { color: var(--ink); font-weight: 600; }
+
+  /* ---- Callouts ----------------------------------------------------- */
+  .note {
+    border-left: 3px solid var(--teal);
+    background: var(--mist);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    margin: 18px 0;
+    font-size: 16px;
+  }
+  .note.why { border-left-color: var(--gold); background: var(--sand); }
+  .note.warn { border-left-color: var(--amber); background: var(--amber-tint); }
+  .note .h { font-weight: 700; display: block; margin-bottom: 3px; }
+
+  /* ---- Tables become cards on a phone -------------------------------- */
+  .tbl { margin: 20px 0 8px; }
+  .row {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .row .rt { font-weight: 700; font-size: 16px; }
+  .row .rs { color: var(--gray); font-size: 15px; margin-top: 3px; }
+  .row .rv {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700; font-size: 17px;
+    margin-top: 8px; color: var(--teal);
+  }
+  .row.total { background: var(--teal); border-color: var(--teal); color: var(--white); }
+  .row.total .rt { font-size: 15px; opacity: .82; font-weight: 600; }
+  .row.total .rv { color: var(--white); font-size: 30px; font-family: var(--display); }
+  .row.total .rs { color: rgba(255,255,255,.78); }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 700; letter-spacing: .04em;
+    padding: 3px 9px; border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .tag.live { background: var(--green-tint); color: var(--green); }
+  .tag.soon { background: var(--amber-tint); color: var(--amber); }
+  .tag.no { background: var(--red-tint); color: var(--red); }
+
+  .src { font-size: 13px; color: var(--gray); margin-top: 14px; }
+  .src a { color: var(--gray); }
+
+  hr.rule { border: 0; border-top: 1px solid var(--line); margin: 44px 0 0; }
+
+  footer.end { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--gray); font-size: 15px; }
+
+  @media (min-width: 720px) {
+    body { font-size: 18px; }
+    .wrap { padding: 0 24px 120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<nav class="jump" aria-label="Sections">
+  <a href="#what">What it does</a>
+  <a href="#open">Open it</a>
+  <a href="#member">Your members</a>
+  <a href="#desk">Your desk</a>
+  <a href="#gamify">Streaks &amp; badges</a>
+  <a href="#honest">Not built yet</a>
+  <a href="#business">The business side</a>
+  <a href="#cost">What it costs</a>
+</nav>
+
+<header class="hero">
+  <p class="eyebrow">AORA · Walkthrough</p>
+  <h1>Twenty minutes, on your phone.</h1>
+  <p class="lede">Two links. First what it does, then use it yourself — as a member, then as the front desk. The business side is at the end, once you have seen the thing it describes.</p>
+  <p class="sub">Everything you will see runs on invented data. No real people, no real bookings, no real payments.</p>
+</header>
+
+<h2 id="what"><span class="num">First</span>What it does</h2>
+<p class="sub">The whole system on one screen, before you touch it. Nothing here is a price or a term — those are at the very end, after you have used it.</p>
+
+<h3>For the public — before they are members</h3>
+<div class="tbl">
+  <div class="row"><div class="rt">Join the list</div><div class="rs">A name and a way to reach them, with recorded consent. No plan, no price, no promise — the only acquisition surface that is lawful before the certificate issues.</div></div>
+  <div class="row"><div class="rt">What’s on</div><div class="rs">Open houses, workshops and talks, with seats held one by one so a full room is actually full.</div></div>
+  <div class="row"><div class="rt">The shop</div><div class="rs">Apparel, recovery gear and supplements. Trades before opening day, because a t-shirt makes nobody a member.</div></div>
+  <div class="row"><div class="rt">The library</div><div class="rs">Articles, podcast episodes, programmes. Public pieces for anyone; the rest included with membership, never sold separately.</div></div>
+</div>
+
+<h3>For members — the app in their pocket</h3>
+<div class="tbl">
+  <div class="row"><div class="rt">Home</div><div class="rs">Next session, credits left, readiness for cold water — above the fold. Opens on the last thing it saw even with no signal, marked with the time.</div></div>
+  <div class="row"><div class="rt">Book</div><div class="rs">Times computed by the same code the server uses. Breathwork physically cannot be scheduled near cold water.</div></div>
+  <div class="row"><div class="rt">Check in</div><div class="rs">One code, one button, a window that means “I am here.” Works offline and sends when the signal returns.</div></div>
+  <div class="row"><div class="rt">AORA Breath</div><div class="rs">A guided session with a timer that refuses to start inside the guard around a plunge.</div></div>
+  <div class="row"><div class="rt">Account</div><div class="rs">Credits summed from the ledger every time, membership, sign-out that ends the session on the server too, and a plain note on what the app reports when it breaks.</div></div>
+</div>
+
+<h3>For the front desk and the operator</h3>
+<div class="tbl">
+  <div class="row"><div class="rt">Day board</div><div class="rs">Who is in the building, who is due, which suite is free. Check-ins from phones land on it.</div></div>
+  <div class="row"><div class="rt">Sales</div><div class="rs">The pipeline from “joined the list” to “became a member,” with a contactable list that is narrower than the visible one.</div></div>
+  <div class="row"><div class="rt">Memberships</div><div class="rs">Plans that must be open to everyone, money that goes to escrow until thirty days after opening — both refused by the database, not by a policy document.</div></div>
+  <div class="row"><div class="rt">Shop &amp; stock</div><div class="rs">Stock moves when money does, in the same transaction. Tax at the origin rate with the destination top-up built and dormant.</div></div>
+  <div class="row"><div class="rt">Content</div><div class="rs">Drafts written with help, published only by a person, a blog and newsletter that fill themselves from what was published.</div></div>
+  <div class="row"><div class="rt">Community</div><div class="rs">Events, guest passes, referrals tracked as a first-class source.</div></div>
+  <div class="row"><div class="rt">The agent</div><div class="rs">Works the people who opted in: scores them, sequences six touches over six weeks, hands the hot and the silent ones to a person. Suggests until you switch sending on.</div></div>
+  <div class="row"><div class="rt">Health</div><div class="rs">Every app reports its own failures, tagged, grouped, with the trail of what happened last — and never a message or a name.</div></div>
+</div>
+
+<div class="note">
+  <span class="h">Now go and use it.</span>
+  The next two parts are hands-on. Every step says what to tap and what you should see.
+</div>
+
+<h2 id="open"><span class="num">Start here</span>Open both, keep both</h2>
+<p>Open these in two tabs and keep them. The whole walkthrough switches between them.</p>
+
+<a class="open" href="./member.html" target="_blank" rel="noopener">
+  <span class="k">Link 1</span>
+  <span class="t">The member app</span>
+  <span class="d">What your clients hold. Booking, check-in, breathwork, the shop.</span>
+</a>
+
+<a class="open" href="./console.html" target="_blank" rel="noopener">
+  <span class="k">Link 2</span>
+  <span class="t">The front desk</span>
+  <span class="d">What your staff run the day on. Schedule, money, sales, content, shop.</span>
+</a>
+
+<div class="note">
+  <span class="h">These are the real thing, not pictures of it.</span>
+  Tap around freely. Book something, cancel it, break it if you can — it resets when you reload.
+</div>
+
+<h2 id="member"><span class="num">Part one</span>What your members do</h2>
+<p class="sub">Open <b>Link 1</b>. Seven steps.</p>
+
+<ol class="steps">
+  <li>
+    <p class="do">Look at the first screen without tapping anything. Notice the feel of it first.</p>
+    <p class="see">Warm linen ground, a serif greeting, bronze section labels, soft corners — a place, not a form. Underneath the feel: next session, credits left, and whether they are cleared for cold water — all above the fold. <b>No streak, no badge, no “you haven’t been in 12 days.”</b> In a mental-health setting a score you can lose punishes the week somebody was unwell.</p>
+  </li>
+  <li>
+    <p class="do">Tap <b>Book</b>. Pick Contrast Therapy and choose a time.</p>
+    <p class="see">The times offered are computed by the same code the server uses — not a list somebody typed. Book one and it disappears for everyone else.</p>
+  </li>
+  <li>
+    <p class="do">Now book <b>AORA Breath</b> close to that contrast session.</p>
+    <p class="see">It refuses, and it names the reason. <b>Breathwork near cold water can cause a blackout with no warning.</b> The database physically cannot store that pair — it is not a warning somebody can click past.</p>
+  </li>
+  <li>
+    <p class="do">Tap <b>Check in</b>.</p>
+    <p class="see">A code with no name and no service on it — it gets read out across a counter. Check-in only opens shortly before the session, so your board means “this person is in the building,” not “this person is awake.”</p>
+  </li>
+  <li>
+    <p class="do">Put the phone in <b>aeroplane mode</b>, then come back to the app.</p>
+    <p class="see">A calm amber line: <b>“You are offline. You can still see your bookings and check in.”</b> Nothing disappears, nothing spins. Tap Check in — it works, and the app says it will send the moment the signal is back. Booking and cancelling politely refuse until then, because a room cannot be promised without asking the server. Turn aeroplane mode off and watch the line go.</p>
+  </li>
+  <li>
+    <p class="do">Tap <b>Breath</b>, then <b>Start</b> on any session.</p>
+    <p class="see">A real paced timer. It re-checks the water rule every second, so it stops itself if the member checks in for a plunge mid-session. Words, not a pulsing animation — it works with the screen off.</p>
+  </li>
+  <li>
+    <p class="do">Back to Home. Tap the event under <b>Also on</b>, then <b>Save me a seat</b>.</p>
+    <p class="see">The seat count drops and holds. Note what is <i>not</i> there: no attendee list. <b>Who else is coming is nobody’s business</b> — attendance at a recovery clinic is not something other clients get to observe.</p>
+  </li>
+  <li>
+    <p class="do">Home → <b>Shop</b>. Add the tee and the electrolytes, then look at the basket.</p>
+    <p class="see">Tax is <b>$2.64, not $4.95</b> — charged on the taxable item only, because the electrolytes are exempt. Subtotal, tax and total sit above the button that charges them, never on a later screen.</p>
+  </li>
+</ol>
+
+<div class="note why">
+  <span class="h">One more, and it is a question for you</span>
+  Home → <b>Your progress</b>. Streaks, points, badges and a leaderboard, working, on invented
+  data. It is there because you asked to see it before ruling on it — read the two streak numbers
+  side by side, because that is the whole argument. <a class="link" href="#gamify">More below.</a>
+</div>
+
+<div class="note why">
+  <span class="h">Why the library has no price</span>
+  Tap <b>Library</b> and you will see “included with your membership.” That is deliberate and it protects real money — the reason is in <a class="link" href="#money">How it earns</a>.
+</div>
+
+<h2 id="desk"><span class="num">Part two</span>What your front desk does</h2>
+<p class="sub">Switch to <b>Link 2</b>. Eight tabs across the top — swipe them sideways on a phone.</p>
+
+<ol class="steps">
+  <li>
+    <p class="do"><b>Schedule.</b> Swipe the board sideways.</p>
+    <p class="see">Every room against the same hours. The times stay pinned on the left while you scroll. Book from the panel underneath and watch the room fill.</p>
+  </li>
+  <li>
+    <p class="do"><b>Operations.</b> Read the numbers.</p>
+    <p class="see">Ten figures, no charts. <b>Every one carries a sentence saying what to do about it</b> — a number nobody can act on is decoration on a screen a busy person is scanning.</p>
+  </li>
+  <li>
+    <p class="do"><b>Sales.</b> Read <b>The agent</b> first, then the three figures under it.</p>
+    <p class="see">The agent is the software working your list for you. For every person who opted in it says what it would do next — send the welcome, wait for the scheduled email, or <b>hand them to a person</b> because they are qualified, were referred by a member, or have ignored three emails. It never contacts anybody without consent on file, never emails somebody a colleague rang yesterday, and cannot mention the membership until your certificate exists. For the first weeks it only <i>suggests</i>; you switch sending on once you have watched it think. Below it: not “23 leads,” but who you may <i>call</i>, who you may only <i>see</i>, and who asked you to stop.</p>
+  </li>
+  <li>
+    <p class="do"><b>Memberships.</b> Read the top of the screen.</p>
+    <p class="see">It says you cannot sell memberships yet. <b>That is the software working, not a gap.</b> Texas requires a health spa certificate before a membership may even be <i>advertised</i> — so until yours is on file, there is no screen anywhere that can take that money. Tap <b>Preview</b> to see what it becomes afterwards.</p>
+  </li>
+  <li>
+    <p class="do"><b>Content.</b> Look at the three columns.</p>
+    <p class="see">Written → approved → published, as three separate states. Drafts the assistant wrote are labelled as such. <b>Nothing reaches the public until a named person approves it</b> — everything here goes out under your name and your licence.</p>
+  </li>
+  <li>
+    <p class="do"><b>Community.</b></p>
+    <p class="see">Open events are how somebody who is not a client gets through the door. Guest passes let a member vouch for someone — the cheapest new client there is.</p>
+  </li>
+  <li>
+    <p class="do"><b>Shop.</b></p>
+    <p class="see">Stock is summed from what was received and sold, never a counter somebody edits. Reorder flags are there, and it says plainly why it will not sell digital products.</p>
+  </li>
+  <li>
+    <p class="do"><b>Health.</b> The last tab.</p>
+    <p class="see">The apps report their own failures here — what kind, on which build, how many phones, and <b>the trail of screens and buttons just before it broke</b>. The same crash from six phones is one row with a six on it. What you will not find is an error message or anything a member typed: the table these land in has no column for either, so a screenshot of this screen cannot leak anything.</p>
+  </li>
+</ol>
+
+<h2 id="gamify"><span class="num">Part three</span>Streaks, points and badges</h2>
+<p class="sub">Working, on invented data, on the <b>Your progress</b> screen. Here is what to look at and what the decision actually is.</p>
+
+<p>The screen shows the same member's attendance counted <b>two ways</b>, side by side. She came 10 times across 7 weeks, with a gap in the middle.</p>
+
+<div class="tbl">
+  <div class="row">
+    <span class="tag live">Cannot go down</span>
+    <div class="rt">Weeks you came — 7</div>
+    <div class="rs">Counts distinct weeks attended, ever. A missed week costs nothing, because nothing was taken away.</div>
+  </div>
+  <div class="row">
+    <span class="tag no">Resets to zero</span>
+    <div class="rt">Weeks in a row — 3</div>
+    <div class="rs">The conventional streak. The fortnight off erased four weeks of turning up.</div>
+  </div>
+</div>
+
+<p>That gap is the whole decision. The planning work for AORA recommends against streaks, points, badges and leaderboards for one reason: <b>a score you can lose lands hardest on the person having the worst month</b> — and in a recovery and mental-health setting, that is the person the clinic exists for.</p>
+
+<h3>If you want it anyway, this is the shape to want</h3>
+<p>Every part of the preview is already built the least harmful way, so the decision is not all-or-nothing:</p>
+<p><b>Badges are for things done</b>, never for consistency, and none can be taken away. <b>The four-week badge counts different weeks, not consecutive ones.</b> <b>Points only ever go up.</b> <b>The leaderboard names nobody</b> and nobody else can see a position.</p>
+
+<div class="note warn">
+  <span class="h">The one to think hardest about</span>
+  The leaderboard. It is the only one that gets <i>worse when other people do well</i>, and it turns attending a recovery clinic into something clients are measured against each other on. The other three can be built so nobody loses anything. A rank cannot.
+</div>
+
+<div class="note">
+  <span class="h">Nothing has been decided, and nothing is stored</span>
+  The preview computes from attendance every time it is opened. There is no counter saved anywhere, so switching it off leaves no trace and no client who has "lost" a number. It is off in the real product today and reachable only on the sample data.
+</div>
+
+<h2 id="honest"><span class="num">Part four</span>What is not built yet</h2>
+<p class="sub">So nothing surprises you later.</p>
+
+<h3>Waiting on you</h3>
+<p><b>Taking money.</b> The payment step stops exactly where the card processor attaches. That needs the AWS account and Square credentials, which need your business documents.</p>
+<p><b>Real sign-in.</b> Members cannot log into a real account yet — that needs the same AWS account. Everything behind the login is built and tested.</p>
+<p><b>Your actual numbers.</b> Every price, the tax rate, the reorder point, the check-in window: placeholders, labelled as such on screen. Where a figure was not known, none was invented.</p>
+
+<h3>Deliberate, not missing</h3>
+<p><b>Streaks, badges and points are OFF</b>, and reachable only as the preview above. A score you can lose punishes the week somebody was unwell — see <a class="link" href="#gamify">Part three</a> and decide.</p>
+<p><b>No social feed, no attendee lists.</b> Who attends a recovery clinic is not public information among your clients.</p>
+<p><b>No paid content tier.</b> See <a class="link" href="#money">How it earns</a> — it would cost more than it makes.</p>
+<p><b>No out-of-state shipping.</b> One location, so one set of tax rules. The machinery for forty-seven states is built and switched off.</p>
+
+<footer class="end">
+  <p><b>If you take one thing from this:</b> the rules that could close the business — the water rule, the certificate, the escrow, the two-zone separation — are not policies anyone has to remember. They are built so the wrong thing cannot happen.</p>
+  <p class="src">
+    Figures cited from published pricing: <a href="https://aws.amazon.com/fargate/pricing/">AWS Fargate</a>,
+    <a href="https://aws.amazon.com/elasticloadbalancing/pricing/">Elastic Load Balancing</a>,
+    <a href="https://aws.amazon.com/cognito/pricing/">Amazon Cognito</a>,
+    RDS db.t4g.micro list price, and published 2026 summaries of Mindbody’s plans, processing rates, marketplace commission and contract terms. Infrastructure totals are list price at low volume and exclude data transfer.
+  </p>
+</footer>
+<h2 id="business" style="margin-top:56px"><span class="num">Only now</span>The business side</h2>
+<p class="sub">You have used it. What follows is how it earns, what it is worth beyond one clinic, and what it costs — in that order, and last on purpose.</p>
+
+<h2 id="money"><span class="num">Part five</span>How it earns</h2>
+<p class="sub">Seven channels. What each needs, and the one that is deliberately closed.</p>
+
+<div class="tbl">
+  <div class="row">
+    <span class="tag soon">Needs your certificate</span>
+    <div class="rt">Memberships</div>
+    <div class="rs">The core of the business. Sold on your own payment rails, <b>not</b> through the App Store — Apple’s own rules exempt services used in person, so you keep the whole margin instead of losing 15–30%.</div>
+    <div class="rv">100% of margin</div>
+  </div>
+  <div class="row">
+    <span class="tag soon">Needs your certificate</span>
+    <div class="rt">Session packs and credits</div>
+    <div class="rs">Prepaid blocks of sessions. The ledger that tracks them is built; a balance is always summed from what was granted and used, so it can never drift from reality.</div>
+    <div class="rv">100% of margin</div>
+  </div>
+  <div class="row">
+    <span class="tag live">Working now</span>
+    <div class="rt">The shop — physical goods</div>
+    <div class="rs">Apparel, recovery gear, supplements, skincare. Outside the App Store rules because it is physical. <b>Can trade before you open</b>: selling a t-shirt makes nobody a member, so the spa rules do not apply.</div>
+    <div class="rv">100% of margin</div>
+  </div>
+  <div class="row">
+    <span class="tag soon">Needs your certificate</span>
+    <div class="rt">Gift cards</div>
+    <div class="rs">Cards for goods behave like retail. Cards redeemable for <i>sessions</i> are treated as membership money and held in escrow — a real distinction the system makes for you.</div>
+    <div class="rv">Full value, held correctly</div>
+  </div>
+  <div class="row">
+    <span class="tag live">Built, free today</span>
+    <div class="rt">Events and workshops</div>
+    <div class="rs">Real capacity, held seat by seat so it cannot oversell. Free open houses are your acquisition channel; paid workshops are a switch away once memberships open.</div>
+    <div class="rv">Acquisition, then ticketing</div>
+  </div>
+  <div class="row">
+    <span class="tag live">Working now</span>
+    <div class="rt">Referrals and guest passes</div>
+    <div class="rs">A member vouches for someone. Tracked as a first-class source, so you can see which channel actually produced clients rather than guessing.</div>
+    <div class="rv">Lowest cost per client</div>
+  </div>
+  <div class="row">
+    <span class="tag soon">Yours to decide</span>
+    <div class="rt">Licensing the platform to other facilities</div>
+    <div class="rs">The eighth channel, and the only one where the app earns without a client walking through your door. Every table is already scoped to a facility, so a second clinic costs you almost nothing to serve. <a class="link" href="#license">Part six</a> is about this one.</div>
+    <div class="rv">Revenue with no clinic attached</div>
+  </div>
+  <div class="row">
+    <span class="tag no">Deliberately closed</span>
+    <div class="rt">A paid content subscription</div>
+    <div class="rs">Selling the podcast or programmes as a separate app subscription would drag <b>every membership sold in the app</b> into In-App Purchase. The commission would land on your memberships, not on the $9 content fee. The library is therefore a membership benefit with no price field anywhere in the code.</div>
+    <div class="rv">Costs more than it earns</div>
+  </div>
+</div>
+
+<div class="note why">
+  <span class="h">That last row is worth a sentence</span>
+  It is the single most expensive mistake available in this category, and it is invisible until the bill arrives. The system is built so it cannot be made by accident.
+</div>
+
+<h2 id="license"><span class="num">Part six</span>The app as a business of its own</h2>
+<p class="sub">Every table in this system is scoped to a franchise. That was built in from the first migration, not retrofitted.</p>
+
+<p>Which means one deployment can serve more than one facility — and the running cost you will see in a moment <b>does not multiply</b>. A second clinic is a row in a table, not a second bill.</p>
+
+<div class="tbl">
+  <div class="row">
+    <div class="rt">What already supports it</div>
+    <div class="rs">Every location, member, booking, product, lead and event carries a franchise. Seven of the database migrations enforce it. A second facility sees its own data and cannot see yours, because the scoping is in the schema rather than in a filter somebody has to remember to write.</div>
+    <div class="rv">Built</div>
+  </div>
+  <div class="row">
+    <div class="rt">What it costs you to add one</div>
+    <div class="rs">The servers, databases and load balancer are already running. A second facility adds storage and traffic, both small. Your marginal cost is close to nothing until volume grows.</div>
+    <div class="rv">Near zero</div>
+  </div>
+  <div class="row">
+    <div class="rt">What the market pays for this</div>
+    <div class="rs">The platform most facilities use publishes $99–699 per location per month, plus processing and a 20% cut of clients it introduces. That is the number a facility is already used to paying — it is the anchor, not a price we are setting for you.</div>
+    <div class="rv">$99–699 / location / month</div>
+  </div>
+  <div class="row">
+    <div class="rt">What makes it worth more than a generic platform</div>
+    <div class="rs">The compliance is the product. A recovery facility in Texas needs the health spa certificate gate, the escrow rules, the breathwork-and-water separation and the two-database split. No general platform has any of it, and building it is the expensive part — which you would already have done.</div>
+    <div class="rv">The moat</div>
+  </div>
+</div>
+
+<div class="note warn">
+  <span class="h">What licensing would make you, honestly</span>
+  A software vendor. That means support obligations when another clinic's front desk cannot book at 7am, a business associate agreement if their clinical data touches it, and liability for their compliance as well as your own. The <i>economics</i> are excellent — near-zero marginal cost against a market rate somebody is already paying. The <i>commitment</i> is real and worth deciding on deliberately.
+</div>
+
+<div class="note">
+  <span class="h">The safer first version</span>
+  Licence to facilities <b>in Texas</b> first. The spa-act rules built in here are Texas rules; another state's are different, and the system already refuses to guess about states it has not been taught. That is a feature when you are selling it — it will not quietly get somebody else's licensing wrong.
+</div>
+
+<h2 id="cost"><span class="num">Part seven</span>What it costs to run</h2>
+<p class="sub">Published list prices, US East, at the volume of one location. Not an estimate of your bill — the arithmetic is below so you can check it.</p>
+
+<div class="tbl">
+  <div class="row">
+    <div class="rt">Servers (AWS Fargate)</div>
+    <div class="rs">Three small services: the wellness API, the clinical API, the background worker. $0.04048 per vCPU-hour + $0.004445 per GB-hour × 730 hours.</div>
+    <div class="rv">$27.03</div>
+  </div>
+  <div class="row">
+    <div class="rt">Two databases (RDS PostgreSQL)</div>
+    <div class="rs">Separate instances for clinical and retail data — that separation is a HIPAA control, not a preference. db.t4g.micro at $21.90 each.</div>
+    <div class="rv">$43.80</div>
+  </div>
+  <div class="row">
+    <div class="rt">Load balancer</div>
+    <div class="rs">$0.0225 per hour × 730, plus a small capacity charge at this traffic.</div>
+    <div class="rv">$16.43</div>
+  </div>
+  <div class="row">
+    <div class="rt">Sign-in (AWS Cognito)</div>
+    <div class="rs">Free to 10,000 monthly active users. One El Paso location will not reach that for a long time.</div>
+    <div class="rv">$0.00</div>
+  </div>
+  <div class="row">
+    <div class="rt">Storage, media, email, logs, secrets</div>
+    <div class="rs">An <b>allowance</b>, not a quote — these are usage-based and small at this volume.</div>
+    <div class="rv">$15 – $25</div>
+  </div>
+  <div class="row total">
+    <div class="rt">Roughly, per month</div>
+    <div class="rv">$100 – $115</div>
+    <div class="rs">Excludes card processing, which you pay to a processor on any system, and excludes building it.</div>
+  </div>
+</div>
+
+<div class="note warn">
+  <span class="h">What this number is not</span>
+  It is infrastructure only, at list price, at low volume. It does not include card processing fees, your accountant, your lawyer, or anyone’s time. Traffic and storage grow the first three lines slowly — this is not a figure that doubles because you got busy.
+</div>
+
+<h2 id="compare"><span class="num">Last</span>Versus buying it</h2>
+<p>The industry default for a business like yours is a booking platform. Published 2026 figures for the largest one:</p>
+
+<div class="tbl">
+  <div class="row">
+    <div class="rt">Platform subscription</div>
+    <div class="rs">Per location, per month. The advertised entry price is the floor, not the norm.</div>
+    <div class="rv">$99 – $699</div>
+  </div>
+  <div class="row">
+    <div class="rt">Payment processing</div>
+    <div class="rs">2.99% – 3.60%. You pay a processor either way — what disappears here is the platform’s markup on top of it.</div>
+    <div class="rv">Their rate, not the processor’s</div>
+  </div>
+  <div class="row">
+    <div class="rt">Marketplace commission</div>
+    <div class="rs"><b>20% of revenue from clients the platform introduces</b>, for as long as that client stays.</div>
+    <div class="rv">20%</div>
+  </div>
+  <div class="row">
+    <div class="rt">Contract</div>
+    <div class="rs">Typically 12–36 months with auto-renewal, and a penalty of 30–50% of the remaining balance to leave early.</div>
+    <div class="rv">Locked in</div>
+  </div>
+</div>
+
+<h3>What you get for roughly the same monthly figure</h3>
+<p>No per-client commission on anyone. No contract and no exit penalty. No third party holding your client list. The safety rules — breathwork away from water, no clinical detail in a notification, the two-database separation — are enforced in <i>your</i> system rather than trusted to somebody else’s roadmap.</p>
+
+<div class="note">
+  <span class="h">And the part a platform cannot sell you</span>
+  Texas requires a health spa certificate before a membership may be advertised or sold, holds pre-opening money in escrow, and makes an unregistered sale a criminal matter with no cure. This system will not let those rules be broken — not because staff remember them, but because the code has no path that reaches the money. A general-purpose booking platform has never heard of Chapter 702.
+</div>
+
+
+</div>
+
+</body>
+</html>
