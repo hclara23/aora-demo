@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>AORA · Operator notes</title>
+    <style>
+      body {
+        margin: 0;
+        background: #faf7f2;
+        color: #13232b;
+        font:
+          17px/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 820px;
+        margin: auto;
+        padding: 32px 24px 80px;
+      }
+      h1,
+      h2 {
+        font-family: Georgia, serif;
+        font-weight: 500;
+      }
+      h1 {
+        font-size: 44px;
+      }
+      h2 {
+        font-size: 28px;
+        margin-top: 42px;
+      }
+      a {
+        color: #0f4c5c;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 14px;
+        border-bottom: 1px solid #dcd5c9;
+      }
+      aside {
+        background: #f1ece3;
+        padding: 20px;
+        border-left: 3px solid #805d25;
+      }
+      a:focus-visible {
+        outline: 3px solid #805d25;
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="./">← Back to the experience</a>
+      <h1>Build around a working day.</h1>
+      <p>
+        Launch one location with reliable booking, check-in, credits and billing. Expand when a
+        measured operational need justifies the maintenance.
+      </p>
+      <h2>Launch scope</h2>
+      <table>
+        <tr>
+          <th>Prioritize</th>
+          <th>Defer expansion</th>
+        </tr>
+        <tr>
+          <td>Member booking, cancellation, rescheduling and check-in</td>
+          <td>Gamification, rankings and attendance pressure</td>
+        </tr>
+        <tr>
+          <td>Staff schedule, member lookup, recovery queue</td>
+          <td>Licensing the platform to other clinics</td>
+        </tr>
+        <tr>
+          <td>Payment reconciliation, credits and required registration gates</td>
+          <td>Interstate commerce and advanced marketing automation</td>
+        </tr>
+        <tr>
+          <td>Privacy, account deletion and recovery drills</td>
+          <td>New AI features without a measured benefit</td>
+        </tr>
+      </table>
+      <h2>What to measure in a pilot</h2>
+      <ul>
+        <li>Time to complete a booking and proportion completed without staff help.</li>
+        <li>
+          Staff minutes spent on booking and check-in, measured with consent in a small usability
+          study.
+        </li>
+        <li>
+          Bookings recovered through the waitlist. The console counts retained bookings on that
+          channel in the previous 30 days.
+        </li>
+        <li>Failed payments and reconciliation exceptions, using existing operational records.</li>
+        <li>Total operating cost divided by active members, with maintenance included.</li>
+      </ul>
+      <p>
+        Do not collect clinical details, names or free-text session content in product analytics.
+        There are no advertising pixels or third-party analytics SDKs in the authenticated
+        experience.
+      </p>
+      <h2>The real cost model</h2>
+      <p>
+        The former $100–$115/month figure did not match the committed production configuration.
+        Production defines two NAT gateways, Multi-AZ databases (small and micro, with 50 GB each),
+        two wellness API tasks, one clinical API task and one worker task. The worker deployment
+        must also be reconciled with the documented requirement for one isolated task per zone
+        before release.
+      </p>
+      <p>
+        Networking, database storage and standby capacity, logs, backups, secrets, messaging, build
+        services, payment processing, support and engineering time must all be accounted for.
+      </p>
+      <p><a href="./costs.html">Open the editable cost worksheet →</a></p>
+      <h2>Compare fairly</h2>
+      <p>
+        Compare written vendor quotes covering the same services, payment terms, support and
+        migration obligations. Custom ownership adds maintenance and incident response
+        responsibilities.
+      </p>
+      <p>
+        As checked on September 7, 2026, Mindbody describes its discovery fee as 20%, capped at $30,
+        only on a new customer's first purchase. Later bookings are commission-free. The prior claim
+        of a lifetime commission was incorrect.
+        <a href="https://www.mindbodyonline.com/business/pricing">Mindbody pricing and fee terms</a
+        >.
+      </p>
+      <p>
+        A second clinic adds support, onboarding, isolation testing and contractual obligations even
+        when incremental compute is small. Do not describe its marginal cost as zero.
+      </p>
+      <h2>Release gates</h2>
+      <aside>
+        App Store approval and HIPAA readiness cannot be established by a demo. The operator must
+        complete privacy notices, relevant business associate agreements, risk analysis, access
+        reviews, restore drills, real integration tests and native device review before live use.
+      </aside>
+      <p>
+        The repository release checklist records source links and the outstanding evidence. Apple
+        requires accurate metadata, working backend services and reviewer access. Physical services
+        use the applicable external-payment rules; digital goods need separate policy review.
+      </p>
+      <p>
+        <a href="https://developer.apple.com/app-store/review/guidelines/"
+          >Apple review guidelines</a
+        >
+        ·
+        <a
+          href="https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html"
+          >HHS cloud guidance</a
+        >
+        · <a href="https://aws.amazon.com/vpc/pricing/">AWS networking prices</a> ·
+        <a href="https://aws.amazon.com/rds/postgresql/pricing/">AWS database prices</a>
+      </p>
+    </main>
+  </body>
+</html>

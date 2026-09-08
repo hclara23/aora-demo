@@ -1,10 +1,22 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
-<title>AORA</title>
-<script>
-// A deep link into the single-page member app, reloaded. Back to its entry.
-var p = location.pathname;
-location.replace(p.indexOf('/aora-demo/member') === 0 ? '/aora-demo/member/'
-  : p.indexOf('/aora-demo/console') === 0 ? '/aora-demo/console.html' : '/aora-demo/');
-</script>
-</head><body></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>AORA</title>
+    <script>
+      const path = location.pathname;
+      if (path.startsWith('/aora-demo/member/')) {
+        try {
+          sessionStorage.setItem('aora.demo.deep-link', path + location.search + location.hash);
+        } catch {}
+        location.replace('/aora-demo/member/');
+      } else if (path.startsWith('/aora-demo/console')) {
+        location.replace('/aora-demo/console.html');
+      } else location.replace('/aora-demo/');
+    </script>
+  </head>
+  <body>
+    <a href="/aora-demo/">Return to AORA</a>
+  </body>
+</html>

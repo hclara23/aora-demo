@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>AORA · Operating cost worksheet</title>
+    <style>
+      body {
+        margin: 0;
+        background: #faf7f2;
+        color: #13232b;
+        font:
+          17px/1.6 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 960px;
+        margin: auto;
+        padding: 32px 24px 80px;
+      }
+      h1,
+      h2 {
+        font-family: Georgia, serif;
+        font-weight: 500;
+      }
+      h1 {
+        font-size: 42px;
+      }
+      a {
+        color: #0f4c5c;
+      }
+      fieldset {
+        margin: 24px 0;
+        padding: 20px;
+        border: 1px solid #dcd5c9;
+        border-radius: 12px;
+        background: white;
+      }
+      legend {
+        font-weight: 600;
+      }
+      label {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 150px;
+        gap: 16px;
+        align-items: center;
+        margin: 16px 0;
+      }
+      input {
+        min-height: 44px;
+        width: 100%;
+        box-sizing: border-box;
+        font: inherit;
+        padding: 8px;
+        border: 1px solid #5b6770;
+        border-radius: 6px;
+      }
+      input:invalid {
+        border-color: #9b2c2c;
+      }
+      small {
+        display: block;
+        color: #5b6770;
+        font-size: 14px;
+      }
+      output {
+        display: block;
+        background: #0f4c5c;
+        color: white;
+        padding: 24px;
+        border-radius: 12px;
+        white-space: pre-line;
+      }
+      button {
+        font: inherit;
+        min-height: 44px;
+        padding: 8px 18px;
+        border: 1px solid #0f4c5c;
+        border-radius: 6px;
+        background: white;
+        color: #0f4c5c;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible {
+        outline: 3px solid #805d25;
+        outline-offset: 3px;
+      }
+      @media (max-width: 500px) {
+        label {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+      }
+      @media print {
+        button {
+          display: none;
+        }
+      }
+      label small {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      label input {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="./operator.html">← Operator notes</a>
+      <h1>Count the whole cost.</h1>
+      <p>
+        Enter monthly USD amounts from your AWS estimate and vendor quotes. Blank fields stay
+        unknown. Enter 0 only when a cost genuinely does not apply. Nothing is sent or saved; print
+        a copy to retain your assumptions.
+      </p>
+      <form id="costs">
+        <fieldset>
+          <legend>Monthly infrastructure & vendors</legend>
+          <label
+            >Compute<small>All deployed tasks, both zones and workers</small
+            ><input
+              name="compute"
+              aria-label="Monthly compute cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+          <label
+            >Databases & storage<small>Include Multi-AZ standby, provisioned storage and I/O</small
+            ><input
+              name="database"
+              aria-label="Monthly database cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+          <label
+            >Networking<small>NAT, load balancer, public IP addresses and transfer</small
+            ><input
+              name="network"
+              aria-label="Monthly networking cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+          <label
+            >Security & operations<small
+              >Logs, backups, keys, secrets, monitoring and identity</small
+            ><input
+              name="operations"
+              aria-label="Monthly security and operations cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+          <label
+            >Delivery & build services<small
+              >Email, SMS, CDN, mobile builds and developer memberships</small
+            ><input
+              name="delivery"
+              aria-label="Monthly delivery and build cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+          <label
+            >Payment processing<small>Processor and transaction fees at expected volume</small
+            ><input
+              name="payments"
+              aria-label="Monthly payment processing cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+        </fieldset>
+        <fieldset>
+          <legend>Monthly ownership costs</legend>
+          <label
+            >Maintenance & support<small
+              >Engineering time, incident cover, upgrades and training</small
+            ><input
+              name="maintenance"
+              aria-label="Monthly maintenance and support cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+          <label
+            >Compliance & administration<small
+              >Recurring reviews, agreements, insurance and accounting allocation</small
+            ><input
+              name="administration"
+              aria-label="Monthly compliance and administration cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown"
+          /></label>
+        </fieldset>
+        <fieldset>
+          <legend>Separate from the recurring bill</legend>
+          <label
+            >Initial build & launch<input
+              name="build"
+              aria-label="Initial build and launch cost"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              placeholder="Unknown" /></label
+          ><label
+            >Active members per month<input
+              name="members"
+              aria-label="Active members per month"
+              inputmode="numeric"
+              pattern="[1-9][0-9]*"
+              placeholder="Unknown"
+          /></label>
+        </fieldset>
+        <output id="result" aria-live="polite"
+          >Complete the inputs to calculate a full monthly cost.</output
+        >
+        <p>
+          <button type="reset">Clear worksheet</button>
+          <button type="button" id="print">Print / save PDF</button>
+        </p>
+      </form>
+      <h2>Reduce spending with evidence.</h2>
+      <p>
+        Measure utilization before changing capacity. Keep clinical isolation, backups and safety
+        constraints intact. Limit nonproduction uptime, set budget alerts and assign an owner to
+        each recurring vendor cost. Compare network alternatives using actual traffic rather than
+        assuming that additional endpoints are free.
+      </p>
+      <p>
+        <a href="https://calculator.aws/">AWS Pricing Calculator</a> ·
+        <a href="https://aws.amazon.com/vpc/pricing/">Networking prices</a> ·
+        <a href="https://aws.amazon.com/rds/postgresql/pricing/">Database prices</a>
+      </p>
+      <script type="module">
+        import { cents, dollars, summarizeCosts } from './cost-model.mjs';
+        const form = document.getElementById('costs');
+        const keys = [
+          'compute',
+          'database',
+          'network',
+          'operations',
+          'delivery',
+          'payments',
+          'maintenance',
+          'administration',
+        ];
+        function update() {
+          const values = keys.map((key) => form.elements.namedItem(key).value);
+          const sum = summarizeCosts(values);
+          const build = cents(form.elements.namedItem('build').value);
+          const members = form.elements.namedItem('members').value;
+          const perMember =
+            sum.complete && /^[1-9][0-9]{0,8}$/.test(members)
+              ? dollars((sum.total + BigInt(members) / 2n) / BigInt(members))
+              : 'Unknown';
+          document.getElementById('result').textContent =
+            `${sum.complete ? 'Monthly total' : 'Known monthly subtotal (incomplete)'}: ${dollars(sum.total)}\nInitial build & launch: ${build === null ? 'Unknown' : dollars(build)}\nMonthly cost per active member: ${perMember}${sum.complete ? '' : '\nFill every monthly cost to compare full ownership costs.'}`;
+        }
+        form.addEventListener('submit', (event) => event.preventDefault());
+        form.addEventListener('input', update);
+        form.addEventListener('reset', () => queueMicrotask(update));
+        document.getElementById('print').addEventListener('click', () => window.print());
+        update();
+      </script>
+    </main>
+  </body>
+</html>
