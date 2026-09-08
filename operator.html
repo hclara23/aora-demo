@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>AORA · Operator notes</title>
+    <title>AORA · Operating budget</title>
     <style>
       body {
         margin: 0;
@@ -15,7 +15,7 @@
           sans-serif;
       }
       main {
-        max-width: 820px;
+        max-width: 920px;
         margin: auto;
         padding: 32px 24px 80px;
       }
@@ -50,6 +50,69 @@
         padding: 20px;
         border-left: 3px solid #805d25;
       }
+      .budget {
+        background: #0f4c5c;
+        color: #fff;
+        padding: 28px;
+        margin: 28px 0;
+        border-radius: 12px;
+      }
+      .budget strong {
+        display: block;
+        font:
+          52px/1.2 Georgia,
+          serif;
+        margin: 8px 0;
+      }
+      main > .eyebrow {
+        display: block;
+        margin-top: 24px;
+      }
+      th.amount {
+        white-space: normal;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 13px;
+      }
+      .amount {
+        white-space: nowrap;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      small {
+        display: block;
+        color: #52616b;
+        font-size: 14px;
+      }
+      .total {
+        background: #f1ece3;
+        font-weight: 600;
+      }
+      details {
+        margin: 24px 0;
+      }
+      summary {
+        cursor: pointer;
+        padding: 12px 0;
+        font-weight: 600;
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 24px 16px 60px;
+        }
+        h1 {
+          font-size: 36px;
+        }
+        th,
+        td {
+          padding: 10px 6px;
+        }
+        .budget strong {
+          font-size: 42px;
+        }
+      }
       a:focus-visible {
         outline: 3px solid #805d25;
         outline-offset: 4px;
@@ -59,106 +122,261 @@
   <body>
     <main>
       <a href="./">← Back to the experience</a>
-      <h1>Build around a working day.</h1>
+      <span class="eyebrow">AORA · El Paso, Texas</span>
+      <h1>A clear budget for 5,000 users.</h1>
       <p>
-        Launch one location with reliable booking, check-in, credits and billing. Expand when a
-        measured operational need justifies the maintenance.
+        Estimated monthly cost to operate AORA’s member app and staff portal for one El Paso
+        location, including the separate clinical and wellness services, routine maintenance and
+        bilingual member support.
       </p>
-      <h2>Launch scope</h2>
+      <section class="budget" aria-label="Estimated operating budget">
+        <span class="eyebrow">Monthly operating budget</span>
+        <strong>$3,240 <span style="font: 18px system-ui">/ month</span></strong>
+        <p>$38,880 per year · approximately $0.65 per monthly active user.</p>
+        <p>
+          Includes a 20% operating reserve. Payment processing, the clinical-record subscription,
+          taxes and initial launch work are additional.
+        </p>
+      </section>
+      <p>
+        This is a planning estimate, not a fixed-price service offer or a measured production bill.
+        Vendor rates were checked on September 7, 2026. Final costs depend on contracted services
+        and actual usage.
+      </p>
+      <h2>What the budget covers</h2>
       <table>
-        <tr>
-          <th>Prioritize</th>
-          <th>Defer expansion</th>
-        </tr>
-        <tr>
-          <td>Member booking, cancellation, rescheduling and check-in</td>
-          <td>Gamification, rankings and attendance pressure</td>
-        </tr>
-        <tr>
-          <td>Staff schedule, member lookup, recovery queue</td>
-          <td>Licensing the platform to other clinics</td>
-        </tr>
-        <tr>
-          <td>Payment reconciliation, credits and required registration gates</td>
-          <td>Interstate commerce and advanced marketing automation</td>
-        </tr>
-        <tr>
-          <td>Privacy, account deletion and recovery drills</td>
-          <td>New AI features without a measured benefit</td>
-        </tr>
+        <caption>
+          Monthly USD · 5,000 monthly active users
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Service</th>
+            <th scope="col" class="amount">Budget</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              Application hosting<small
+                >Member and staff services, background jobs and room for usage peaks.</small
+              >
+            </th>
+            <td class="amount">$100</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Databases and recovery<small
+                >Separate clinical and wellness databases, standby capacity and database
+                backups.</small
+              >
+            </th>
+            <td class="amount">$180</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Secure networking<small
+                >Private outbound connections, traffic routing, public addresses and
+                transfer.</small
+              >
+            </th>
+            <td class="amount">$140</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              File storage and delivery<small
+                >App files, limited document storage and content delivery.</small
+              >
+            </th>
+            <td class="amount">$40</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Monitoring and security tools<small
+                >Error alerts, operational logs, encryption keys and credentials.</small
+              >
+            </th>
+            <td class="amount">$150</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Messaging and app delivery<small
+                >Email, limited SMS, mobile builds, app updates and developer memberships.</small
+              >
+            </th>
+            <td class="amount">$150</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Testing environment<small
+                >A separate environment for checking updates before release.</small
+              >
+            </th>
+            <td class="amount">$140</td>
+          </tr>
+          <tr class="total">
+            <th scope="row">Technology and vendor subtotal</th>
+            <td class="amount">$900</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Routine maintenance<small
+                >Budget assumption: 10 hours per month at $100/hour for updates, fixes and recovery
+                checks.</small
+              >
+            </th>
+            <td class="amount">$1,000</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              English and Spanish support<small
+                >Budget assumption: 20 hours per month at $25/hour for account and app
+                assistance.</small
+              >
+            </th>
+            <td class="amount">$500</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Privacy and compliance administration<small
+                >Monthly allocation for access reviews, records and staff refreshers.</small
+              >
+            </th>
+            <td class="amount">$300</td>
+          </tr>
+          <tr class="total">
+            <th scope="row">Operating subtotal</th>
+            <td class="amount">$2,700</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              Operating reserve<small
+                >20% of the operating subtotal for variable usage and unplanned work.</small
+              >
+            </th>
+            <td class="amount">$540</td>
+          </tr>
+          <tr class="total">
+            <th scope="row">Monthly planning total</th>
+            <td class="amount">$3,240</td>
+          </tr>
+        </tbody>
       </table>
-      <h2>What to measure in a pilot</h2>
+      <h2>Designed around local usage</h2>
+      <p>
+        The estimate assumes 5,000 users active in a month, around 500 daily users and up to 100
+        using the app at once. These are sizing assumptions to validate in launch testing, not a
+        capacity guarantee.
+      </p>
       <ul>
-        <li>Time to complete a booking and proportion completed without staff help.</li>
         <li>
-          Staff minutes spent on booking and check-in, measured with consent in a small usability
-          study.
+          Up to 1 million application requests, 20,000 emails and 2,000 US SMS segments per month.
         </li>
         <li>
-          Bookings recovered through the waitlist. The console counts retained bookings on that
-          channel in the previous 30 days.
+          100 GB of primary database storage across both services, up to 100 GB of files and 100 GB
+          of monthly file delivery.
         </li>
-        <li>Failed payments and reconciliation exceptions, using existing operational records.</li>
-        <li>Total operating cost divided by active members, with maintenance included.</li>
+        <li>
+          English and Spanish content, El Paso local appointment times and US cloud hosting in
+          Northern Virginia.
+        </li>
+        <li>
+          Breathing animations and generated audio run on the user’s device, keeping practice
+          sessions light on server usage.
+        </li>
       </ul>
       <p>
-        Do not collect clinical details, names or free-text session content in product analytics.
-        There are no advertising pixels or third-party analytics SDKs in the authenticated
-        experience.
+        SMS is reserved for essential messages; longer or Unicode messages can use multiple billable
+        segments. Routine support covers approximately 100 twelve-minute enquiries per month during
+        scheduled hours. Dedicated 24-hour support, clinical care, video streaming and AI services
+        are outside this estimate.
       </p>
-      <h2>The real cost model</h2>
+      <h2>Payment fees follow sales, not user count</h2>
       <p>
-        The former $100–$115/month figure did not match the committed production configuration.
-        Production defines two NAT gateways, Multi-AZ databases (small and micro, with 50 GB each),
-        two wellness API tasks, one clinical API task and one worker task. The worker deployment
-        must also be reconciled with the documented requirement for one isolated task per zone
-        before release.
-      </p>
-      <p>
-        Networking, database storage and standby capacity, logs, backups, secrets, messaging, build
-        services, payment processing, support and engineering time must all be accounted for.
-      </p>
-      <p><a href="./costs.html">Open the editable cost worksheet →</a></p>
-      <h2>Compare fairly</h2>
-      <p>
-        Compare written vendor quotes covering the same services, payment terms, support and
-        migration obligations. Custom ownership adds maintenance and incident response
-        responsibilities.
-      </p>
-      <p>
-        As checked on September 7, 2026, Mindbody describes its discovery fee as 20%, capped at $30,
-        only on a new customer's first purchase. Later bookings are commission-free. The prior claim
-        of a lifetime commission was incorrect.
-        <a href="https://www.mindbodyonline.com/business/pricing">Mindbody pricing and fee terms</a
+        Square advertises online Payments API processing at 2.9% plus $0.30 per transaction. The
+        examples below assume one eligible domestic online card payment per paying member per month,
+        at an illustrative $100 membership price. The actual Square agreement and payment method
+        determine the rate.
+        <a href="https://developer.squareup.com/us/en/online-payment-apis">Square payment pricing</a
         >.
       </p>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Paying members</th>
+            <th scope="col" class="amount">Processing / month</th>
+            <th scope="col" class="amount">App + processing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">500<small>$50,000 monthly sales</small></th>
+            <td class="amount">$1,600</td>
+            <td class="amount">$4,840</td>
+          </tr>
+          <tr>
+            <th scope="row">1,000<small>$100,000 monthly sales</small></th>
+            <td class="amount">$3,200</td>
+            <td class="amount">$6,440</td>
+          </tr>
+          <tr>
+            <th scope="row">5,000<small>$500,000 monthly sales</small></th>
+            <td class="amount">$16,000</td>
+            <td class="amount">$19,240</td>
+          </tr>
+        </tbody>
+      </table>
       <p>
-        A second clinic adds support, onboarding, isolation testing and contractual obligations even
-        when incremental compute is small. Do not describe its marginal cost as zero.
+        Processing examples exclude refunds, international-card surcharges and other
+        payment-specific charges. They are not revenue forecasts. Clinical-record subscription,
+        taxes and launch costs remain additional.
       </p>
-      <h2>Release gates</h2>
-      <aside>
-        App Store approval and HIPAA readiness cannot be established by a demo. The operator must
-        complete privacy notices, relevant business associate agreements, risk analysis, access
-        reviews, restore drills, real integration tests and native device review before live use.
-      </aside>
+      <h2>Services priced separately</h2>
       <p>
-        The repository release checklist records source links and the outstanding evidence. Apple
-        requires accurate metadata, working backend services and reviewer access. Physical services
-        use the applicable external-payment rules; digital goods need separate policy review.
+        Osmind clinical-record licensing and integration fees require a provider-specific quote.
+        Initial development, migration, security assessment, legal review and native app submission
+        are one-time launch costs scoped separately. Facility rent, equipment, clinical staff,
+        marketing, business insurance and accounting belong in the centre’s operating budget.
       </p>
+      <h2>Privacy and launch assurance</h2>
       <p>
-        <a href="https://developer.apple.com/app-store/review/guidelines/"
-          >Apple review guidelines</a
-        >
-        ·
+        The budget allows for separated clinical and wellness services, encrypted storage, backups
+        and recurring privacy administration. Clinical launch remains subject to completed risk
+        assessment, applicable business associate agreements, access and recovery testing, and
+        approved privacy procedures. This estimate does not establish HIPAA compliance or App Store
+        approval.
         <a
           href="https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html"
           >HHS cloud guidance</a
-        >
-        · <a href="https://aws.amazon.com/vpc/pricing/">AWS networking prices</a> ·
-        <a href="https://aws.amazon.com/rds/postgresql/pricing/">AWS database prices</a>
+        >.
       </p>
+      <details>
+        <summary>How the estimate is calculated</summary>
+        <p>
+          Technology amounts are rounded monthly budget allowances, using 730 hosting hours in AWS
+          US East (Northern Virginia). The baseline allows for five small application/job instances,
+          two separately hosted databases with standby copies, two private outbound gateways and a
+          shared traffic router. The allowance includes headroom; it is not an exact AWS calculator
+          quote.
+        </p>
+        <p>
+          Direct sign-in for 5,000 users fits within Cognito Essentials’ published 10,000-user free
+          allowance, assuming that allowance is available to AORA. Additional identity features or
+          enterprise sign-in may cost more. At SES’s published base rate, 20,000 outbound emails
+          cost $2 before data and optional features. The delivery budget also covers SMS and app
+          distribution. Labour rates are budgeting assumptions, not local supplier quotes.
+        </p>
+        <p>
+          <a href="https://aws.amazon.com/fargate/pricing/">Application hosting</a> ·
+          <a href="https://aws.amazon.com/rds/postgresql/pricing/">Databases</a> ·
+          <a href="https://aws.amazon.com/vpc/pricing/">Networking</a> ·
+          <a href="https://aws.amazon.com/cognito/pricing/">Sign-in</a> ·
+          <a href="https://aws.amazon.com/ses/pricing/">Email</a> ·
+          <a href="https://aws.amazon.com/end-user-messaging/pricing/">SMS</a> ·
+          <a href="https://sentry.io/pricing/">Monitoring</a> ·
+          <a href="https://docs.expo.dev/billing/plans/">Mobile builds</a>
+        </p>
+      </details>
+      <p><a href="./costs.html">Adjust this budget for your operating plan →</a></p>
     </main>
   </body>
 </html>

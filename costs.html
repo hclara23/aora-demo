@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>AORA · Operating cost worksheet</title>
+    <title>AORA · Budget planner</title>
     <style>
       body {
         margin: 0;
@@ -98,6 +98,13 @@
           display: none;
         }
       }
+      @media (max-width: 500px) {
+        label {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
       label small {
         grid-column: 1;
         grid-row: 2;
@@ -110,48 +117,57 @@
   </head>
   <body>
     <main>
-      <a href="./operator.html">← Operator notes</a>
-      <h1>Count the whole cost.</h1>
+      <a href="./operator.html">← Operating budget</a>
+      <h1>Plan for 5,000 users.</h1>
       <p>
-        Enter monthly USD amounts from your AWS estimate and vendor quotes. Blank fields stay
-        unknown. Enter 0 only when a cost genuinely does not apply. Nothing is sent or saved; print
-        a copy to retain your assumptions.
+        Start with the $3,240 monthly operating estimate for 5,000 active users in El Paso. Adjust
+        these planning allowances to reflect your agreements and expected usage. Payment processing
+        and initial launch costs are shown separately. Clinical-record licensing, taxes and centre
+        operating expenses are additional. This is a budget estimate, not a service quote.
+      </p>
+      <p>
+        Changes stay in this page until you refresh. Print or save a PDF to keep your plan.
+        <a href="./operator.html">Review the scope, assumptions and vendor pricing</a>.
       </p>
       <form id="costs">
         <fieldset>
           <legend>Monthly infrastructure & vendors</legend>
           <label
-            >Compute<small>All deployed tasks, both zones and workers</small
+            >Compute<small>Application hosting and a separate testing environment</small
             ><input
               name="compute"
+              value="240"
               aria-label="Monthly compute cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
               placeholder="Unknown"
           /></label>
           <label
-            >Databases & storage<small>Include Multi-AZ standby, provisioned storage and I/O</small
+            >Databases & storage<small
+              >Separate databases, standby capacity, backups, file storage and delivery</small
             ><input
               name="database"
+              value="220"
               aria-label="Monthly database cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
               placeholder="Unknown"
           /></label>
           <label
-            >Networking<small>NAT, load balancer, public IP addresses and transfer</small
+            >Networking<small>Secure connections, traffic routing, addresses and transfer</small
             ><input
               name="network"
+              value="140"
               aria-label="Monthly networking cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
               placeholder="Unknown"
           /></label>
           <label
-            >Security & operations<small
-              >Logs, backups, keys, secrets, monitoring and identity</small
+            >Security & operations<small>Operational monitoring, encryption and secure access</small
             ><input
               name="operations"
+              value="150"
               aria-label="Monthly security and operations cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -159,16 +175,18 @@
           /></label>
           <label
             >Delivery & build services<small
-              >Email, SMS, CDN, mobile builds and developer memberships</small
+              >Email, limited SMS, mobile builds, app updates and developer memberships</small
             ><input
               name="delivery"
+              value="150"
               aria-label="Monthly delivery and build cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
               placeholder="Unknown"
           /></label>
           <label
-            >Payment processing<small>Processor and transaction fees at expected volume</small
+            >Payment processing<small
+              >Optional: add expected processing fees; excluded from the operating subtotal</small
             ><input
               name="payments"
               aria-label="Monthly payment processing cost"
@@ -178,12 +196,13 @@
           /></label>
         </fieldset>
         <fieldset>
-          <legend>Monthly ownership costs</legend>
+          <legend>Monthly service and administration costs</legend>
           <label
             >Maintenance & support<small
-              >Engineering time, incident cover, upgrades and training</small
+              >10 maintenance hours at $100/hour plus 20 bilingual support hours at $25/hour</small
             ><input
               name="maintenance"
+              value="1500"
               aria-label="Monthly maintenance and support cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -191,13 +210,27 @@
           /></label>
           <label
             >Compliance & administration<small
-              >Recurring reviews, agreements, insurance and accounting allocation</small
+              >Recurring access reviews, privacy records and staff refreshers</small
             ><input
               name="administration"
+              value="300"
               aria-label="Monthly compliance and administration cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
               placeholder="Unknown"
+          /></label>
+        </fieldset>
+        <fieldset>
+          <legend>Operating reserve</legend>
+          <label
+            >Monthly reserve<small
+              >Baseline: 20% of $2,700. Adjust this amount when changing your plan.</small
+            ><input
+              name="reserve"
+              aria-label="Monthly operating reserve"
+              inputmode="decimal"
+              pattern="[0-9]+(\.[0-9]{1,2})?"
+              value="540"
           /></label>
         </fieldset>
         <fieldset>
@@ -210,33 +243,27 @@
               pattern="[0-9]+(\.[0-9]{1,2})?"
               placeholder="Unknown" /></label
           ><label
-            >Active members per month<input
+            >Monthly active users<input
               name="members"
-              aria-label="Active members per month"
+              value="5000"
+              aria-label="Monthly active users"
               inputmode="numeric"
               pattern="[1-9][0-9]*"
               placeholder="Unknown"
           /></label>
         </fieldset>
-        <output id="result" aria-live="polite"
-          >Complete the inputs to calculate a full monthly cost.</output
-        >
+        <output id="result" aria-live="polite">Your planning estimate is calculated below.</output>
         <p>
-          <button type="reset">Clear worksheet</button>
+          <button type="reset">Reset to 5,000-user estimate</button>
           <button type="button" id="print">Print / save PDF</button>
         </p>
       </form>
-      <h2>Reduce spending with evidence.</h2>
+      <h2>Keep the budget predictable.</h2>
       <p>
-        Measure utilization before changing capacity. Keep clinical isolation, backups and safety
-        constraints intact. Limit nonproduction uptime, set budget alerts and assign an owner to
-        each recurring vendor cost. Compare network alternatives using actual traffic rather than
-        assuming that additional endpoints are free.
-      </p>
-      <p>
-        <a href="https://calculator.aws/">AWS Pricing Calculator</a> ·
-        <a href="https://aws.amazon.com/vpc/pricing/">Networking prices</a> ·
-        <a href="https://aws.amazon.com/rds/postgresql/pricing/">Database prices</a>
+        The plan prioritizes reliable booking, account access and member support. Monthly reviews
+        compare usage and service needs with the budget, while maintaining separate clinical records
+        and recovery protection. Expanded support, additional locations and new services are priced
+        separately.
       </p>
       <script type="module">
         import { cents, dollars, summarizeCosts } from './cost-model.mjs';
@@ -247,13 +274,14 @@
           'network',
           'operations',
           'delivery',
-          'payments',
           'maintenance',
           'administration',
+          'reserve',
         ];
         function update() {
           const values = keys.map((key) => form.elements.namedItem(key).value);
           const sum = summarizeCosts(values);
+          const payments = cents(form.elements.namedItem('payments').value);
           const build = cents(form.elements.namedItem('build').value);
           const members = form.elements.namedItem('members').value;
           const perMember =
@@ -261,11 +289,14 @@
               ? dollars((sum.total + BigInt(members) / 2n) / BigInt(members))
               : 'Unknown';
           document.getElementById('result').textContent =
-            `${sum.complete ? 'Monthly total' : 'Known monthly subtotal (incomplete)'}: ${dollars(sum.total)}\nInitial build & launch: ${build === null ? 'Unknown' : dollars(build)}\nMonthly cost per active member: ${perMember}${sum.complete ? '' : '\nFill every monthly cost to compare full ownership costs.'}`;
+            `${sum.complete ? 'Monthly operating budget' : 'Known operating subtotal (incomplete)'}: ${dollars(sum.total)}\nAnnual operating budget: ${sum.complete ? dollars(sum.total * 12n) : 'Not yet calculated'}\nMonthly cost per active user: ${perMember}\nPayment processing: ${payments === null ? 'Not yet estimated — additional' : dollars(payments)}\nOperating budget + processing: ${sum.complete && payments !== null ? dollars(sum.total + payments) : 'Not yet calculated'}\nInitial build & launch: ${build === null ? 'Quoted separately' : dollars(build)}\nClinical-record licensing, taxes and centre expenses: additional${sum.complete ? '' : '\nComplete the operating fields to calculate your budget.'}`;
         }
         form.addEventListener('submit', (event) => event.preventDefault());
         form.addEventListener('input', update);
-        form.addEventListener('reset', () => queueMicrotask(update));
+        form.addEventListener('reset', () => {
+          // Recalculate after the browser restores the input defaults.
+          requestAnimationFrame(update);
+        });
         document.getElementById('print').addEventListener('click', () => window.print());
         update();
       </script>
