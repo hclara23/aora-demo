@@ -118,9 +118,9 @@
   <body>
     <main>
       <a href="./operator.html">← Operating budget</a>
-      <h1>Plan for 5,000 users.</h1>
+      <h1>Plan your own budget.</h1>
       <p>
-        Start with the $3,240 monthly operating estimate for 5,000 active users in El Paso. Adjust
+        Start with the $400 monthly vendor budget for about 1,000 active users in El Paso. Adjust
         these planning allowances to reflect your agreements and expected usage. Payment processing
         and initial launch costs are shown separately. Clinical-record licensing, taxes and centre
         operating expenses are additional. This is a budget estimate, not a service quote.
@@ -136,7 +136,7 @@
             >Compute<small>Application hosting and a separate testing environment</small
             ><input
               name="compute"
-              value="240"
+              value="45"
               aria-label="Monthly compute cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -147,7 +147,7 @@
               >Separate databases, standby capacity, backups, file storage and delivery</small
             ><input
               name="database"
-              value="220"
+              value="95"
               aria-label="Monthly database cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -157,7 +157,7 @@
             >Networking<small>Secure connections, traffic routing, addresses and transfer</small
             ><input
               name="network"
-              value="140"
+              value="130"
               aria-label="Monthly networking cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -167,7 +167,7 @@
             >Security & operations<small>Operational monitoring, encryption and secure access</small
             ><input
               name="operations"
-              value="150"
+              value="50"
               aria-label="Monthly security and operations cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -178,7 +178,7 @@
               >Email, limited SMS, mobile builds, app updates and developer memberships</small
             ><input
               name="delivery"
-              value="150"
+              value="40"
               aria-label="Monthly delivery and build cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -199,10 +199,10 @@
           <legend>Monthly service and administration costs</legend>
           <label
             >Maintenance & support<small
-              >10 maintenance hours at $100/hour plus 20 bilingual support hours at $25/hour</small
+              >Optional. The proposal requires no retainer; Elevate’s security and store updates are $200 a month if you choose them</small
             ><input
               name="maintenance"
-              value="1500"
+              value="0"
               aria-label="Monthly maintenance and support cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -210,10 +210,10 @@
           /></label>
           <label
             >Compliance & administration<small
-              >Recurring access reviews, privacy records and staff refreshers</small
+              >AORA’s own staff time, not a vendor bill. Left at zero in the launch budget.</small
             ><input
               name="administration"
-              value="300"
+              value="0"
               aria-label="Monthly compliance and administration cost"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -224,9 +224,9 @@
           <legend>Operating reserve</legend>
           <label
             >Monthly reserve<small
-              >Baseline: 20% of $2,700. Adjust this amount when changing your plan.</small
+              >Baseline: the $40 usage cushion inside the $400 launch budget. Adjust when changing your plan.</small
             ><input
-              name="reserve"
+              name="reserve" value="40"
               aria-label="Monthly operating reserve"
               inputmode="decimal"
               pattern="[0-9]+(\.[0-9]{1,2})?"
@@ -245,7 +245,7 @@
           ><label
             >Monthly active users<input
               name="members"
-              value="5000"
+              value="1000"
               aria-label="Monthly active users"
               inputmode="numeric"
               pattern="[1-9][0-9]*"
